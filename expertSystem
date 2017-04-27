@@ -1,0 +1,13 @@
+#!/Users/pferry/.rvm/rubies/ruby-2.3.3/bin/ruby
+
+require_relative "expertSystem"
+
+def main
+	if ARGV.count == 1
+		expertSystem(ARGV[0])
+	else
+		puts "Error: Wrong number of args"
+	end
+end
+
+main
