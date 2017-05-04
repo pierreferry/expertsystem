@@ -1,0 +1,7 @@
+A | B + C + D => E
+(F | G) + H + I => E
+
+=BC
+?E
+
+# With =BC, E should be false.

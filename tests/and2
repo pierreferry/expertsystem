@@ -1,4 +1,3 @@
-#bonjour
 B => A
 D + E => B
 G + H => F
@@ -8,8 +7,7 @@ L + M => K
 O + P => L + N
 N => M
 
-=DEIJOP
+=DEIJP
 ?AFKP
 
-# With =DEIJOP, AFKP is true.
 # With =DEIJP, AFP is true, K is false.

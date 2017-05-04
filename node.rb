@@ -1,37 +1,42 @@
 class Node
-	attr_accessor :name, :parent, :children, :status, :rules
+	attr_accessor :name, :children, :status, :rules
 
 	def initialize(opts = {})
 		@name = opts[:name]
 		@status = false
-		@parent = opts[:parent]
-		@rules = Hash.new
-
-		# add children if passed an array or initialize as an empty array
-		@children = opts[:children].is_a?(Array) ? opts[:children] : []
+		@rules = Array.new
+		@children = Array.new
 	end
 
-	def addRule(key, node)
-		@rules[key] ||= Array.new
-		@rules[key].push(node)
+	def addRule(rule)
+		@rules.push(rule)
 	end
 
 	def evalRules
-		@rules.each do |key, rule|
-			if key == "and"
-				rule.each do |r|
-					return false unless r.status
-				end
-				return true
+		result = Array.new
+		@rules.each do |rule|
+			string = rule.dup
+			('A'..'Z').each do |char|
+				string.gsub!(char, $graph.node(char).status.to_s) if $graph.node(char)
+			end
+			string.gsub!('+', '&')
+			begin
+				result.push(eval(string))
+			rescue SyntaxError
+				abort "Syntax error: '#{rule}' rule caused the issue"
 			end
 		end
-
-		return false
+		if result.include?(true)
+			return true
+		else
+			return false
+		end
 	end
 
 	def changeStatus
-		if self.evalRules
-			@status = true
+		newstatus = self.evalRules
+		if newstatus != @status
+			@status = newstatus
 			@children.each do |child|
 				child.changeStatus
 			end
