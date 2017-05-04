@@ -58,11 +58,9 @@ def createGraph(rules, initialFacts)
 	nodeList.each { |node| $graph.add_node(node) }
 	parseRules(rules)
 	setupInitialFacts(initialFacts)
-	initialFacts.each_char do |char|
-		if char >= 'A' && char <= 'Z'
-			$graph.node(char).children.each do |child|
-				child.changeStatus
-			end
+	$graph.nodes.each do |key, node|
+				node.children.each do |child|
+					child.changeStatus
+				end
 		end
-	end
 end

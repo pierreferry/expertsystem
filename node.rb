@@ -34,12 +34,16 @@ class Node
 	end
 
 	def changeStatus
-		newstatus = self.evalRules
-		if newstatus != @status
-			@status = newstatus
-			@children.each do |child|
-				child.changeStatus
+			newstatus = self.evalRules
+			if newstatus
+				@status = true
+				begin
+					@children.each do |child|
+						child.changeStatus
+					end
+				rescue SystemStackError
+					abort 'Infinite loop detected'
+				end
 			end
-		end
 	end
 end

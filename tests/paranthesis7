@@ -4,4 +4,4 @@ A | B + C + D => E
 =GH
 ?E
 
-# With =GH, E should be true.
+# With =GH, E should be false.
